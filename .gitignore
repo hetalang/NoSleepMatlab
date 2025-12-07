@@ -4,3 +4,4 @@
 *.mltbx
 
 /_draft/
+*.mexw64

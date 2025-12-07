@@ -49,9 +49,7 @@ function handle = nosleep_on(varargin)
     end
 
     % Handle is a simple struct storing backend and backend-specific data
-    handle = struct( ...
-        'backend', backend, ...
-        'data',    data);
+    handle = struct('backend', backend, 'data', data);
 
     % Register handle in session state
     nosleep_state('register', handle);
