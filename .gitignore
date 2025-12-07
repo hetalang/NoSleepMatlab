@@ -1,2 +1,4 @@
-resources/*
-*.log
+/resources/
+*.autosave
+*.asv
+*.mltbx
