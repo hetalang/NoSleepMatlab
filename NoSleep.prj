@@ -6,7 +6,7 @@
     <param.company>Heta project</param.company>
     <param.summary>Matlab tool to prevent sleep mode</param.summary>
     <param.description>Prevent your computer from going to sleep while MATLAB is running long tasks — and automatically restore normal system behavior when the task finishes or fails.</param.description>
-    <param.screenshot />
+    <param.screenshot>${PROJECT_ROOT}\nosleep-logo.jpg</param.screenshot>
     <param.version>0.1.0</param.version>
     <param.output>${PROJECT_ROOT}\NoSleep.mltbx</param.output>
     <param.products.name />
@@ -69,7 +69,6 @@ _draft</param.exclude.filters>
       <param.authnamewatermark />
       <param.email />
       <param.company />
-      <param.screenshot />
       <param.output />
       <param.products.name />
       <param.products.id />
@@ -106,10 +105,11 @@ _draft</param.exclude.filters>
       <file>${PROJECT_ROOT}</file>
     </fileset.rootdir>
     <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\+NoSleep</file>
       <file>${PROJECT_ROOT}\docs</file>
       <file>${PROJECT_ROOT}\LICENSE</file>
+      <file>${PROJECT_ROOT}\nosleep-logo.jpg</file>
       <file>${PROJECT_ROOT}\README.md</file>
-      <file>${PROJECT_ROOT}\src</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />
