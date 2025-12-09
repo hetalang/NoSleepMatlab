@@ -1,7 +1,7 @@
 /*
  * nosleep_win.c
  *
- * Windows backend for NoSleep.mltbx using Power Request API.
+ * Windows backend for NoSleepMatlab using Power Request API.
  * Each call to create_request() creates a separate Power Request handle.
  *
  * MATLAB interface:

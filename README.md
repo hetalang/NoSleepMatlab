@@ -1,4 +1,4 @@
-# NoSleep.mltbx
+# NoSleepMatlab
 Matlab tool to prevent sleep mode
 
 Prevent your computer from going to sleep while MATLAB is running long tasks — and automatically restore normal system behavior when the task finishes or fails.
@@ -13,9 +13,8 @@ Prevent your computer from going to sleep while MATLAB is running long tasks —
 
 ## Installation
 
-1. Download the latest release file:  
-   **`NoSleep.mltbx`** from  
-   <https://github.com/hetalang/NoSleep.mltbx/releases>
+1. Download the latest release file **`NoSleep.mltbx`** from  
+   <https://github.com/hetalang/NoSleepMatlab/releases>
 
 2. Install by double-clicking the `.mltbx` file  
    **or** run:
