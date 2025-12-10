@@ -23,23 +23,17 @@ Prevent your computer from going to sleep while MATLAB is running long tasks —
 matlab.addons.install('NoSleep.mltbx');
 ```
 
-After installation:
+## Basic usage
 
 ```matlab
 import NoSleep.*
-```
 
-## Usage
-
-### Basic usage
-
-```matlab
 nosleep_on();
 % long-running MATLAB code here
 nosleep_off();
 ```
 
-### Block-style usage
+## Block-style usage
 
 `with_nosleep` runs a function while sleep-prevention is active and restores normal behavior afterwards:
 
@@ -54,14 +48,13 @@ with_nosleep(@() myLongComputation());
 Prevents the display from turning off (default: `false`):
 
 ```matlab
-nosleep_on('keep_display', true);
+nosleep_on(true);
 ```
 
 Block-style:
 
 ```matlab
-with_nosleep(@() myLongComputation(), ...
-             'keep_display', true);
+with_nosleep(@() myLongComputation(), true);
 ```
 
 ## Known limitations and recommendations
@@ -72,7 +65,7 @@ Some sleep behaviors are enforced by the operating system and **cannot** be over
 
 2. On Windows devices with **Modern Standby (S0ix) on battery power**, the OS may ignore sleep-prevention signals after ~5 minutes of inactivity when the display is off.
    - Plugging into **AC power** avoids this behavior.  
-   - Alternatively, use `'keep_display', true` to keep the screen awake.
+   - Alternatively, use **keep_display** `true` to keep the screen awake.
 
 ## Related packages
 

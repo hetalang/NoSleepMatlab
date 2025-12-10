@@ -52,7 +52,7 @@ function nosleep_off_all()
         if isstruct(h) && isfield(h, 'backend') && isfield(h, 'data')
             % Best-effort: ignore errors during bulk shutdown
             try
-                nosleep_off(h);
+                NoSleep.nosleep_off(h);
             catch
                 % swallow errors to ensure all handles are attempted
             end
