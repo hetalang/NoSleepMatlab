@@ -1,4 +1,9 @@
 # NoSleepMatlab
+[![Continuous Integration](https://github.com/hetalang/NoSleepMatlab/actions/workflows/ci.yml/badge.svg)](https://github.com/hetalang/Matlab/actions/workflows/ci.yml)
+[![GitHub issues](https://img.shields.io/github/issues/hetalang/NoSleepMatlab.svg)](https://GitHub.com/hetalang/NoSleepMatlab/issues/)
+[![License: MIT](https://img.shields.io/github/license/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/blob/master/LICENSE)
+[![CodeQL](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql)
+
 Matlab tool to prevent sleep mode
 
 Prevent your computer from going to sleep while MATLAB is running long tasks — and automatically restore normal system behavior when the task finishes or fails.
