@@ -1,0 +1,47 @@
+name: Continuous Integration
+permissions:
+  contents: read
+  
+on:
+  push:
+    branches: [ master, "*" ]
+    tags: [ "*" ]
+  pull_request:
+
+jobs:
+  matlab-tests:
+    name: MATLAB tests - ${{ matrix.os }} (integration=${{ matrix.integration_tests }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, integration_tests: 1 }
+          - { os: macos-latest,   integration_tests: 1 }
+          - { os: ubuntu-latest,  integration_tests: 0 }
+
+    env:
+      INTEGRATION_TESTS: ${{ matrix.integration_tests }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- WINDOWS: COMPILE THE MEX BACKEND ---
+      - name: Build Windows MEX backend
+        if: matrix.os == 'windows-latest'
+        uses: matlab-actions/run-command@v2
+        with:
+          command: |
+            disp("Compiling Windows MEX backend...");
+            mex -output "+NoSleep/private/nosleep_win" "csrc/nosleep_win.c";
+            disp("MEX compilation finished.");
+
+      # --- RUN TESTS ---
+      - name: Run MATLAB tests
+        uses: matlab-actions/run-tests@v2
+        with:
+          source-folder: .
+          test-results-junit: test-results/results-${{ matrix.os }}.xml
+          code-coverage-cobertura: coverage/coverage-${{ matrix.os }}.xml
