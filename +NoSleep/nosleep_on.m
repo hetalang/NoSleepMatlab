@@ -1,27 +1,22 @@
-function handle = nosleep_on(varargin)
-% Prevent the operating system from suspending while MATLAB work is running.
+function handle = nosleep_on(keep_display)
+% Turn nosleep on.
 %
 % Usage:
-%   handle = nosleep_on();
-%   handle = nosleep_on('keep_display', true);
+%   handle = nosleep_on();        % keep_display = false
+%   handle = nosleep_on(true);    % keep_display = true
 
-    % Parse input arguments
-    keepDisplay = false;
-    if mod(numel(varargin), 2) ~= 0
-        error('NoSleep:InvalidArguments', ...
-              'Arguments must be specified as name-value pairs.');
-    end
-
-    for i = 1:2:numel(varargin)
-        name  = lower(string(varargin{i}));
-        value = varargin{i+1};
-        switch name
-            case "keep_display"
-                keepDisplay = logical(value);
-            otherwise
-                error('NoSleep:InvalidOption', ...
-                      'Unknown option "%s".', name);
+    % Parse input
+    if nargin == 0
+        keepDisplay = false;
+    elseif nargin == 1
+        if ~(islogical(keep_display) && isscalar(keep_display))
+            error("NoSleep:InvalidArgument", ...
+                  "'keep_display' must be a logical scalar.");
         end
+        keepDisplay = keep_display;
+    else
+        error("NoSleep:TooManyInputs", ...
+              "nosleep_on accepts at most one logical argument.");
     end
 
     backend = '';
@@ -30,26 +25,27 @@ function handle = nosleep_on(varargin)
     % OS detection and backend dispatch
     if ispc
         backend = 'windows';
-        % TODO: implement backend-specific function in +NoSleep/private
-        data = nosleep_on_windows(keepDisplay);
+        data    = nosleep_on_windows(keepDisplay);
     elseif ismac
         backend = 'macos';
-        data = nosleep_on_macos(keepDisplay);
+        data    = nosleep_on_macos(keepDisplay);
     elseif isunix
         backend = 'linux';
-        data = nosleep_on_linux(keepDisplay);
+        data    = nosleep_on_linux(keepDisplay);
     else
         error('NoSleep:UnsupportedOS', 'Unsupported operating system.');
     end
 
-    % Backend may fail and return [] or NaN to signal "no-op"
-    if isempty(data) || (isnumeric(data) && isscalar(data) && isnan(data))
+    % Backend may fail and return [] to signal "no-op"
+    if isempty(data)
         handle = [];
         return;
     end
 
-    % Handle is a simple struct storing backend and backend-specific data
-    handle = struct('backend', backend, 'data', data);
+    % Create handle struct
+    handle = struct( ...
+        'backend', backend, ...
+        'data',    data);
 
     % Register handle in session state
     nosleep_state('register', handle);
