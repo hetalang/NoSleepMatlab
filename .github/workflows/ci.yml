@@ -28,6 +28,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check if systemd-inhibit is available
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          which systemd-inhibit
+          systemd-inhibit --list
+          systemd-inhibit --what=sleep --who=MyTest --why=ForTest --mode=block sleep infinity &
+
+      - name: Check if caffeinate is available
+        if: matrix.os == 'macos-latest'
+        run: |
+          which caffeinate
+          pmset -g assertions
+          #caffeinate -s & sleep 2 # for testing only
+          #pmset -g assertions
+
       - name: Setup MATLAB
         uses: matlab-actions/setup-matlab@v2
         with:

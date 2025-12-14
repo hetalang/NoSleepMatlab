@@ -65,13 +65,7 @@ classdef TestUnitsHandles < matlab.unittest.TestCase
             
             % Create one more handle
             h3 = NoSleep.nosleep_on();
-            if ~isempty(h3)
-                % Global off must turn off all active and not error
-                testCase.verifyWarningFree(@() NoSleep.nosleep_off());
-            else
-                % Backend not available, but API still must not crash
-                testCase.verifyWarningFree(@() NoSleep.nosleep_off());
-            end
+            testCase.verifyWarningFree(@() NoSleep.nosleep_off());
         end
     end
 end

@@ -6,7 +6,7 @@ classdef TestIntegrationWindows < matlab.unittest.TestCase
 
             % Run only on Windows
             if ~ispc
-                testCase.applyFixture(matlab.unittest.fixtures.DisableWarningsFixture());
+                %testCase.applyFixture(matlab.unittest.fixtures.DisableWarningsFixture());
                 testCase.assumeFail("Windows-specific test.");
             end
 
