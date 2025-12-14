@@ -8,8 +8,9 @@ function data = nosleep_on_linux(keep_display)
 
     keep_display = logical(keep_display);
 
+    % Check if systemd-inhibit is available in PATH
     if ~have_systemd_inhibit()
-        warning("NoSleep: 'systemd-inhibit' not found in PATH; Linux backend is not available.");
+        warning("NoSleep: 'systemd-inhibit' Linux backend is not available.");
         data = [];
         return;
     end
@@ -20,30 +21,28 @@ function data = nosleep_on_linux(keep_display)
         what = 'sleep';
     end
 
-    % Base command similar to R/Julia versions:
-    % systemd-inhibit --what=... --who=NoSleepMATLAB --why=Long_computation --mode=block sleep infinity
+    % Construct command to start systemd-inhibit
     baseCmd  = sprintf('systemd-inhibit --what=%s --who=NoSleepMATLAB --why=Long_computation --mode=block sleep infinity', what);
-    shellCmd = sprintf('%s >/dev/null 2>&1 & echo $!', baseCmd);
+    shellCmd = sprintf('%s >/dev/null 2>&1 & echo $!', baseCmd); % suppress output and run in background, capture output
+    %fullCmd = sprintf('sh -c "%s"', shellCmd); % Run via /bin/sh and capture PID
 
-    % Run via /bin/sh and capture PID
-    fullCmd = sprintf('sh -c "%s"', shellCmd);
-    [status, cmdout] = system(fullCmd);
+    [~, cmdout] = system(shellCmd);
 
-    if status ~= 0 || isempty(cmdout)
-        warning("NoSleep: failed to start 'systemd-inhibit' via shell.");
+    % cmdout should contain the PID of the background process when successful
+    if isempty(strtrim(cmdout))
+        warning("NoSleep: no PID returned from 'systemd-inhibit' command.");
         data = [];
         return;
     end
 
-    % PID should be the last non-empty line
-    lines = strsplit(strtrim(cmdout), {'\r', '\n'});
-    lines = lines(~cellfun(@isempty, lines));
-    if isempty(lines)
+    % PID should be the last token in the output; handle shells that prefix job info.
+    % in R it looks like: pid_str <- utils::tail(out[nzchar(out)], 1L)
+    pid_match = regexp(strtrim(cmdout), '(\d+)\s*$', 'tokens', 'once');
+    if isempty(pid_match)
         error("NoSleep: could not read PID from systemd-inhibit output.");
     end
 
-    pid_str = lines{end};
-    pid_val = str2double(strtrim(pid_str));
+    pid_val = str2double(pid_match{1});
 
     if isnan(pid_val) || pid_val <= 0
         error("NoSleep: invalid PID parsed for 'systemd-inhibit' process.");
