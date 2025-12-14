@@ -35,6 +35,7 @@
 %
 .git
 .gitignore
+.github
 resources
 csrc
 tests
@@ -59,7 +60,7 @@ dist</param.exclude.filters>
     <param.compatiblity.windows>true</param.compatiblity.windows>
     <param.compatiblity.macos>true</param.compatiblity.macos>
     <param.compatiblity.linux>true</param.compatiblity.linux>
-    <param.compatiblity.matlabonline>true</param.compatiblity.matlabonline>
+    <param.compatiblity.matlabonline>false</param.compatiblity.matlabonline>
     <param.installation.map />
     <param.additional.sw.names />
     <param.additional.sw.licenses />
@@ -94,7 +95,6 @@ dist</param.exclude.filters>
       <param.compatiblity.windows />
       <param.compatiblity.macos />
       <param.compatiblity.linux />
-      <param.compatiblity.matlabonline />
       <param.installation.map />
       <param.additional.sw.names />
       <param.additional.sw.licenses />
