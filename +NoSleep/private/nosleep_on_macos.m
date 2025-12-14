@@ -10,13 +10,10 @@ function data = nosleep_on_macos(keep_display)
     keep_display = logical(keep_display);
 
     if ~have_caffeinate()
-        warning("NoSleep: 'caffeinate' not found in PATH; macOS backend is not available.");
+        warning("NoSleep: 'caffeinate' macOS backend is not available.");
         data = [];
         return;
     end
-
-    % Finite timeout (2 hours) to avoid infinite lock if teardown fails.
-    timeout_sec = 7200;
 
     % Base command
     % caffeinate [-d] -i -t 7200
@@ -24,17 +21,21 @@ function data = nosleep_on_macos(keep_display)
     if keep_display
         flag_d = "-d ";
     end
+    % -i Idle system sleep
+    % -d Idle display sleep
+    % -m Disk sleep
+    % -s System sleep when connected to AC power
+    % -u User is active for 5 minutes
+    % -t Timeout in seconds
 
-    baseCmd = sprintf("caffeinate %s-i -t %d", flag_d, timeout_sec);
-
-    % Start caffeinate in background and echo its PID
+    baseCmd = sprintf("caffeinate %s -s", flag_d);
     shellCmd = sprintf('%s >/dev/null 2>&1 & echo $!', baseCmd);
-    fullCmd  = sprintf('sh -c "%s"', shellCmd);
+    %fullCmd  = sprintf('sh -c "%s"', shellCmd);
 
-    [status, cmdout] = system(fullCmd);
+    [~, cmdout] = system(shellCmd);
 
-    if status ~= 0 || isempty(cmdout)
-        warning("NoSleep: failed to start 'caffeinate' via shell.");
+    if isempty(strtrim(cmdout))
+        warning("NoSleep: no PID returned from 'caffeinate' command.");
         data = [];
         return;
     end

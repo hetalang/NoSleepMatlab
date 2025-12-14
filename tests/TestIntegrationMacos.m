@@ -17,11 +17,8 @@ classdef TestIntegrationMacos < matlab.unittest.TestCase
             end
 
             % Require pmset and caffeinate binaries
-            if system("which pmset > /dev/null") ~= 0 || ...
-               system("which caffeinate > /dev/null") ~= 0
-
-                testCase.verifyFail( ...
-                    "macOS CLI check requires 'pmset' and 'caffeinate' in PATH." );
+            if system("which pmset > /dev/null") ~= 0 || system("which caffeinate > /dev/null") ~= 0
+                testCase.verifyFail("macOS CLI check requires 'pmset' and 'caffeinate' in PATH.");
                 return
             end
 
@@ -36,20 +33,21 @@ classdef TestIntegrationMacos < matlab.unittest.TestCase
                 end
             end
 
-            % Small delay to allow macOS powerd to update state
-            function shortWait()
-                pause(0.2);
-            end
-
             % Before enabling nosleep
-            pre = pmsetAssertions();
-
+            %pre = pmsetAssertions();
             h = NoSleep.nosleep_on(false);  % keep_display = false
-            shortWait();
+            % h.data.pid must be numeric
+            testCase.verifyTrue( ...
+                isnumeric(h.data.pid) && isscalar(h.data.pid) && (h.data.pid > 0), ...
+                sprintf("NoSleep handle PID must be a positive numeric scalar. Got: %s", h.data.pid) ...
+            );
+
+            pause(5);
             mid = pmsetAssertions();
 
             NoSleep.nosleep_off(h);
-            shortWait();
+            
+            pause(5);
             post = pmsetAssertions();
 
             % Look for caffeinate assertion (same as R test)
@@ -63,10 +61,9 @@ classdef TestIntegrationMacos < matlab.unittest.TestCase
             );
 
             % After nosleep_off(), caffeinate assertion should be gone
-            % OR pmset may return identical snapshot (caching behavior)
             testCase.verifyTrue( ...
-                ~hasCaffPost || strcmp(post, mid), ...
-                "pmset output after nosleep_off() should not show 'caffeinate', or be identical to mid due to caching." ...
+                ~hasCaffPost, ...
+                "pmset output after nosleep_off() should not show 'caffeinate', or be identical to mid due to caching" ...
             );
         end
     end
