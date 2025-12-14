@@ -1,0 +1,43 @@
+name: Build and attach .mltbx to GitHub Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-upload:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v2
+
+      - name: Build MEX (Windows)
+        uses: matlab-actions/run-command@v2
+        with:
+          command: |
+            disp("Compiling Windows MEX backend...");
+            if ~exist("dist", "dir"); mkdir("dist"); end
+            mex -output "+NoSleep/private/nosleep_win" "csrc/nosleep_win.c"
+            disp("MEX compilation finished.");
+
+      - name: Package toolbox (.mltbx)
+        uses: matlab-actions/run-command@v2
+        with:
+          command: |
+            disp("Packaging toolbox...");
+            if ~exist("dist", "dir"); mkdir("dist"); end
+            matlab.addons.toolbox.packageToolbox("NoSleep.prj", fullfile("dist","NoSleep.mltbx"));
+            disp("Toolbox packaged: dist/NoSleep.mltbx");
+
+      - name: Attach .mltbx to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/NoSleep.mltbx
