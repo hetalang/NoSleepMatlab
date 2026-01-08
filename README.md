@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/github/license/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/blob/master/LICENSE)
 [![CodeQL](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql)
 [![Release](https://img.shields.io/github/v/release/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/releases)
-[![MATLAB File Exchange](https://img.shields.io/badge/MATLAB-File%20Exchange-orange)](https://www.mathworks.com/matlabcentral/fileexchange/)
+[![MATLAB File Exchange](https://img.shields.io/badge/MATLAB-File%20Exchange-orange)](https://www.mathworks.com/matlabcentral/fileexchange/183008-nosleepmatlab)
 
 Matlab tool to prevent sleep mode
 
@@ -18,7 +18,13 @@ Prevent your computer from going to sleep while MATLAB is running long tasks —
 - **Safe by design**: the sleep-inhibit request is always released on exit or error.
 - Optional **keep_display** mode to prevent the screen from turning off.
 
-## Installation
+## Installation from MATLAB File Exchange
+
+1. Go to <https://www.mathworks.com/matlabcentral/fileexchange/183008-nosleepmatlab>
+2. Click **Download** and save the `.mltbx` file.
+3. Install by double-clicking the `.mltbx` file 
+
+## Installation from GitHub
 
 1. Download the latest release file **`NoSleep.mltbx`** from  
    <https://github.com/hetalang/NoSleepMatlab/releases>
