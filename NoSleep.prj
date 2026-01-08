@@ -7,7 +7,7 @@
     <param.summary>Matlab tool to prevent sleep mode</param.summary>
     <param.description>Prevent your computer from going to sleep while MATLAB is running long tasks — and automatically restore normal system behavior when the task finishes or fails.</param.description>
     <param.screenshot>${PROJECT_ROOT}\nosleep-logo.jpg</param.screenshot>
-    <param.version>0.1.0</param.version>
+    <param.version>0.1.1</param.version>
     <param.output>${PROJECT_ROOT}\NoSleep.mltbx</param.output>
     <param.products.name />
     <param.products.id />
