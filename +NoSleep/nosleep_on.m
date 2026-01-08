@@ -1,9 +1,21 @@
 function handle = nosleep_on(keep_display)
-% Turn nosleep on.
+%NOSLEEP_ON Prevent system sleep while MATLAB code runs.
 %
-% Usage:
-%   handle = nosleep_on();        % keep_display = false
-%   handle = nosleep_on(true);    % keep_display = true
+% Syntax:
+%   handle = NoSleep.nosleep_on()
+%   handle = NoSleep.nosleep_on(keep_display)
+%
+% Input:
+%   keep_display (logical scalar, optional)
+%     true  - also prevent display sleep
+%     false - prevent only system sleep (default)
+%
+% Output:
+%   handle (struct or [])
+%     Backend handle used by NoSleep.nosleep_off(handle).
+%     Returns [] if the backend is unavailable or could not be started.
+%
+% See also: NoSleep.nosleep_off, NoSleep.with_nosleep
 
     % Parse input
     if nargin == 0

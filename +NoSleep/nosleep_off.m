@@ -1,10 +1,27 @@
 function nosleep_off(handle)
-% Turn off a specific nosleep request or all active ones.
+%NOSLEEP_OFF Release one or all active nosleep requests.
 %
-% Usage:
-%   nosleep_off(handle);    % turn off specific handle
-%   nosleep_off();          % turn off all active handles
-%   nosleep_off([]);        % no-op
+% Syntax:
+%   NoSleep.nosleep_off(handle)
+%   NoSleep.nosleep_off()
+%   NoSleep.nosleep_off([])
+%
+% Input:
+%   handle (struct, optional)
+%     Handle previously returned by NoSleep.nosleep_on().
+%
+% Behavior:
+%   - NoSleep.nosleep_off(handle) releases a specific nosleep request.
+%   - NoSleep.nosleep_off() releases all active nosleep requests created
+%     in the current MATLAB session.
+%   - NoSleep.nosleep_off([]) is a no-op.
+%
+% Errors:
+%   Throws an error if the handle is invalid or incompatible with the
+%   current operating system.
+%
+% See also: NoSleep.nosleep_on, NoSleep.with_nosleep
+
 
     % Case 1: no argument -> turn off all
     if nargin == 0

@@ -1,9 +1,37 @@
 function varargout = with_nosleep(func, keep_display)
-% Execute a function while nosleep is active.
+%WITH_NOSLEEP Execute a function while preventing system sleep.
 %
-% Usage:
-%   result = with_nosleep(@() myLongJob());
-%   result = with_nosleep(@() myLongJob(), true);
+% Syntax:
+%   NoSleep.with_nosleep(func)
+%   NoSleep.with_nosleep(func, keep_display)
+%
+% Input:
+%   func (function_handle)
+%     Function handle to execute while nosleep is active.
+%
+%   keep_display (logical scalar, optional)
+%     true  - also prevent display sleep
+%     false - prevent only system sleep (default)
+%
+% Output:
+%   varargout
+%     Outputs returned by the executed function. If func produces no
+%     outputs, WITH_NOSLEEP also returns none.
+%
+% Description:
+%   WITH_NOSLEEP enables nosleep, executes the provided function, and
+%   guarantees that nosleep is disabled afterward, even if the function
+%   throws an error.
+%
+%   If no supported backend is available on the current platform,
+%   WITH_NOSLEEP executes the function normally without error.
+%
+% Example:
+%   NoSleep.with_nosleep(@() pause(10))
+%
+%   result = NoSleep.with_nosleep(@() sum(1:10), true)
+%
+% See also: NoSleep.nosleep_on, NoSleep.nosleep_off
 
     if ~isa(func, 'function_handle')
         error('NoSleep:InvalidArgument', ...

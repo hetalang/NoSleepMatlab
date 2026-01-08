@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/github/license/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/blob/master/LICENSE)
 [![CodeQL](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql)
 [![Release](https://img.shields.io/github/v/release/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/releases)
-
+[![MATLAB File Exchange](https://img.shields.io/badge/MATLAB-File%20Exchange-orange)](https://www.mathworks.com/matlabcentral/fileexchange/)
 
 Matlab tool to prevent sleep mode
 
@@ -81,6 +81,22 @@ Some sleep behaviors are enforced by the operating system and **cannot** be over
 
 - **NoSleep.jl** — <https://github.com/hetalang/NoSleep.jl>  
   Julia implementation with the same backend logic (Windows/macOS/Linux).
+
+## For developers
+
+Toolbox rebuild:
+
+```matlab
+mex -output +NoSleep/private/nosleep_win csrc/nosleep_win.c
+matlab.addons.toolbox.packageToolbox('NoSleep.prj','dist/NoSleep.mltbx')
+```
+
+Run tests:
+
+```matlab
+results = runtests("tests")
+results.table
+```
 
 ## Author
 
