@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/github/license/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/blob/master/LICENSE)
 [![CodeQL](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hetalang/NoSleepMatlab/actions/workflows/github-code-scanning/codeql)
 [![Release](https://img.shields.io/github/v/release/hetalang/NoSleepMatlab)](https://github.com/hetalang/NoSleepMatlab/releases)
-[![MATLAB File Exchange](https://img.shields.io/badge/MATLAB-File%20Exchange-orange)](https://www.mathworks.com/matlabcentral/fileexchange/183008-nosleepmatlab)
+[![View NoSleep on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/183008-nosleep)
 
 Matlab tool to prevent sleep mode
 
